@@ -43,8 +43,8 @@ cd src/Aihrly.Api
 dotnet run
 ```
 
-The API starts at `https://localhost:5001` (or `http://localhost:5000`).
-Swagger UI is available at: `http://localhost:5000/swagger`
+The API starts at `https://localhost:1141` (or `http://localhost:1141`).
+Swagger UI is available at: `http://localhost:1141/swagger`
 
 Migrations are applied automatically on startup. Seed data is included.
 
