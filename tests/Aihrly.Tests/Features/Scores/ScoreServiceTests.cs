@@ -1,3 +1,4 @@
+using Xunit;
 using Aihrly.Api.Domain.Entities;
 using Aihrly.Api.Domain.Enums;
 using Aihrly.Api.Features.Scores;
@@ -6,6 +7,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aihrly.Tests.Features.Scores;
+
 
 /// <summary>
 /// Tests for ScoreService — verifying PUT (overwrite) semantics.

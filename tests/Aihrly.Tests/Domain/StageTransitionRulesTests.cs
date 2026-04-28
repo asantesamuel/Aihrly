@@ -1,6 +1,8 @@
+using Xunit;
 using Aihrly.Api.Domain;
 using Aihrly.Api.Domain.Enums;
 using FluentAssertions;
+
 
 namespace Aihrly.Tests.Domain;
 

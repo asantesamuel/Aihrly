@@ -1,3 +1,4 @@
+using Xunit;
 using Aihrly.Api.Common.Errors;
 using Aihrly.Api.Domain.Entities;
 using Aihrly.Api.Domain.Enums;
@@ -8,6 +9,9 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aihrly.Tests.Features.Applications;
+
+
+
 
 /// <summary>
 /// Integration-style tests for ApplicationService.
