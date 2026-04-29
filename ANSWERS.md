@@ -146,6 +146,6 @@ A recruiter reports: *"I moved a candidate to Interview yesterday but today they
 |-----------------|--------------|------|
 | C#              | 3            | I am comfortable building services, controllers, DTOs, and async flows, and I am still growing in deeper framework patterns. |
 | SQL             | 3            | I can design practical tables, indexes, constraints, and relationships, while still improving on advanced query tuning. |
-| Git             | 3            | I can work with branches, commits, diffs, and normal collaboration workflows confidently. |
+| Git             | 4            | I can work with branches, commits, diffs, and normal collaboration workflows confidently. |
 | REST API Design | 3            | I understand resource-based endpoints, status codes, validation, and DTOs, and I am improving at designing APIs for long-term product use. |
-| Writing Tests   | 3            | I can write meaningful unit tests around business rules and services, and I want to keep improving integration-test coverage. |
+| Writing Tests   | 2            | I can write meaningful unit tests around business rules and services, and I want to keep improving integration-test coverage. |
