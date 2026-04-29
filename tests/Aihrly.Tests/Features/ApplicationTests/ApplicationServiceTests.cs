@@ -258,6 +258,34 @@ public class ApplicationServiceTests
     }
 
     [Fact]
+    public async Task MoveStage_ToRejected_ShouldEnqueueRejectedNotification()
+    {
+        await using var db = CreateDb();
+        var (service, mock) = CreateService(db);
+        var jobId = await SeedOpenJobAsync(db);
+        var teamMemberId = await SeedTeamMemberAsync(db);
+
+        var application = new Application
+        {
+            Id = Guid.NewGuid(),
+            JobId = jobId,
+            CandidateName = "T",
+            CandidateEmail = "t@t.com",
+            Stage = ApplicationStage.Applied,
+            AppliedAt = DateTime.UtcNow
+        };
+        db.Applications.Add(application);
+        await db.SaveChangesAsync();
+
+        await service.MoveStageAsync(application.Id, teamMemberId,
+            new MoveStageRequest("Rejected", null));
+
+        mock.Verify(
+            n => n.EnqueueNotification(application.Id, NotificationType.Rejected),
+            Times.Once);
+    }
+
+    [Fact]
     public async Task MoveStage_ToNonTerminalStage_ShouldNotEnqueueNotification()
     {
         await using var db = CreateDb();
