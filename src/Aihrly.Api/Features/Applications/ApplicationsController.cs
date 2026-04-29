@@ -15,27 +15,41 @@ public class ApplicationsController : ControllerBase
     }
 
     // POST /api/jobs/{jobId}/applications
-    // PUBLIC — candidates apply here, no X-Team-Member-Id needed
     [HttpPost("api/jobs/{jobId:guid}/applications")]
     public async Task<IActionResult> SubmitApplication(
         Guid jobId,
         [FromBody] SubmitApplicationRequest request,
         CancellationToken ct)
     {
+        if (string.IsNullOrWhiteSpace(request.CandidateName))
+            throw new ValidationException("CandidateName is required.");
+
+        if (string.IsNullOrWhiteSpace(request.CandidateEmail))
+            throw new ValidationException("CandidateEmail is required.");
+
+        if (!request.CandidateEmail.Contains('@') ||
+            !request.CandidateEmail.Contains('.'))
+            throw new ValidationException(
+                $"'{request.CandidateEmail}' is not a valid email address.");
+
         var result = await _applicationService.SubmitApplicationAsync(jobId, request, ct);
         return CreatedAtAction(nameof(GetApplication), new { id = result.Id }, result);
     }
 
-    // GET /api/jobs/{jobId}/applications?stage=screening
+    // GET /api/jobs/{jobId}/applications?stage=screening&page=1&pageSize=20
     [HttpGet("api/jobs/{jobId:guid}/applications")]
     public async Task<IActionResult> ListApplications(
         Guid jobId,
         [FromQuery] string? stage,
-        [FromQuery] int page     = 1,
+        [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20,
         CancellationToken ct = default)
     {
-        var query  = new ListApplicationsQuery(stage, page, pageSize);
+        if (page < 1) page = 1;
+        if (pageSize < 1) pageSize = 1;
+        if (pageSize > 100) pageSize = 100;
+
+        var query = new ListApplicationsQuery(stage, page, pageSize);
         var result = await _applicationService.ListApplicationsAsync(jobId, query, ct);
         return Ok(result);
     }
@@ -55,25 +69,20 @@ public class ApplicationsController : ControllerBase
         [FromBody] MoveStageRequest request,
         CancellationToken ct)
     {
-        // Require X-Team-Member-Id — reject if missing or invalid
         var teamMemberId = GetRequiredTeamMemberId();
+
+        if (string.IsNullOrWhiteSpace(request.TargetStage))
+            throw new ValidationException("TargetStage is required.");
+
         var result = await _applicationService.MoveStageAsync(id, teamMemberId, request, ct);
         return Ok(result);
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Reads the resolved TeamMemberId from HttpContext.Items (set by middleware).
-    /// Throws UnauthorizedException if the header was not present on this request.
-    /// </summary>
     private Guid GetRequiredTeamMemberId()
     {
         if (HttpContext.Items.TryGetValue(TeamMemberResolverMiddleware.ContextKey, out var value)
             && value is Guid id)
-        {
             return id;
-        }
 
         throw new UnauthorizedException(
             $"This endpoint requires the '{TeamMemberResolverMiddleware.HeaderName}' header.");
