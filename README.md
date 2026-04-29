@@ -115,4 +115,4 @@ When an application moves to `Hired` or `Rejected`, the request saves the stage 
 
 ## Approximate Hours Spent
 
-~ X hours
+~ 6 hours
