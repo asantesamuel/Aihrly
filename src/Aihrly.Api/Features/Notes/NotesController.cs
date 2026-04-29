@@ -1,6 +1,5 @@
 using Aihrly.Api.Common.Errors;
 using Aihrly.Api.Common.Middleware;
-using Aihrly.Api.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aihrly.Api.Features.Notes;
@@ -23,6 +22,13 @@ public class NotesController : ControllerBase
         CancellationToken ct)
     {
         var teamMemberId = GetRequiredTeamMemberId();
+
+        if (string.IsNullOrWhiteSpace(request.Type))
+            throw new ValidationException("Type is required.");
+
+        if (string.IsNullOrWhiteSpace(request.Description))
+            throw new ValidationException("Description is required.");
+
         var result = await _noteService.AddNoteAsync(id, teamMemberId, request, ct);
         return StatusCode(StatusCodes.Status201Created, result);
     }
