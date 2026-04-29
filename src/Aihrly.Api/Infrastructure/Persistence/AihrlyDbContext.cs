@@ -21,7 +21,7 @@ public class AihrlyDbContext : DbContext
     public DbSet<Application>     Applications     => Set<Application>();
     public DbSet<ApplicationNote> ApplicationNotes => Set<ApplicationNote>();
     public DbSet<StageHistory>    StageHistories   => Set<StageHistory>();
-    public DbSet<ApplicationScore>ApplicationScores=> Set<ApplicationScore>();
+    public DbSet<ApplicationScore> ApplicationScores => Set<ApplicationScore>();
     public DbSet<Notification>    Notifications    => Set<Notification>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

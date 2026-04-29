@@ -30,11 +30,6 @@ public class ErrorHandlingMiddleware
     {
         try
         {
-            // TEMPORARY DEBUG — remove after confirming it works
-            var allHeaders = string.Join(", ", context.Request.Headers.Keys);
-            Console.WriteLine($"[DEBUG] Headers received: {allHeaders}");
-            Console.WriteLine($"[DEBUG] Items after middleware: {string.Join(", ", context.Items.Keys)}");
-
             await _next(context);
         }
         catch (NotFoundException ex)

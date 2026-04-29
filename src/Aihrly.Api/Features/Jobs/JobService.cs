@@ -4,7 +4,6 @@ using Aihrly.Api.Domain.Enums;
 using Aihrly.Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Aihrly.Api.Features.Jobs;
 
 public class JobService : IJobService

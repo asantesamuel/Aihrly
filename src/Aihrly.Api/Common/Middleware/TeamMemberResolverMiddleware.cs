@@ -31,9 +31,9 @@ public class TeamMemberResolverMiddleware
             }
 
             var exists = await db.TeamMembers
-                .FirstOrDefaultAsync(t => t.Id == teamMemberId);
+                .AnyAsync(t => t.Id == teamMemberId, context.RequestAborted);
 
-            if (exists is null)
+            if (!exists)
             {
                 throw new UnauthorizedException(
                     $"Team member with id '{teamMemberId}' does not exist.");
