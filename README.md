@@ -1,5 +1,3 @@
-# Aihrly - Junior Backend Developer Take-Home Assessment
-
 ## What I Built
 
 Aihrly is a .NET 9 Web API for managing job postings and candidate applications in a simple hiring pipeline. It supports job listing, candidate application submission, stage transitions, stage history, team notes, scoring, and asynchronous notification recording when an application reaches a terminal stage. The API uses PostgreSQL with EF Core migrations and seeded team members for reviewer-friendly local setup.
